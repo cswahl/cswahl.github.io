@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>music site</title>
+    <style>
+      * {
+          box-sizing: border-box;
+      }
+
+      *:focus {
+          outline:none;
+      }
+
+      body {
+          margin: 0;
+      }
+      
+      .header {
+          background-color: #E2F2F2;
+          padding: 8px;
+          text-align: center;
+      }
+
+      .header h1 {
+          color: #298282;
+          font-family: courier;
+          font-size: 50px;
+      }
+
+      .topnav {
+          overflow: hidden;
+          background-color: #57A4A9;
+      }
+
+      .topnav a {
+          float: left;
+          display: block;
+          color: #D5F2F3;
+          font-family: courier;
+          font-weight: bold;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+      }
+        
+      /* Change color on hover */
+      .topnav a:hover {
+          background-color: #9FC8CA;
+          color: #277174;
+      }
+
+      .row {
+          background-color: white;
+      }
+
+      .column {
+          float: left;
+          padding: 10px 30px;
+          font-family: courier;
+      }
+
+      /* Left and right column */
+      .column.side {
+          width: 25%;
+      }
+
+      /* Middle column */
+      .column.middle {
+          width: 70%;
+      }
+
+     /* Clear floats after the columns */
+     .row:after {
+         content: "";
+         display: table;
+         clear: both;
+     }
+
+    .button {
+         background-color: #DF6348;
+         border: none;
+         border-radius: 4px;
+         color: white;
+         font-family: courier;
+         font-weight: bold;
+         padding: 16px 18px;
+         text-align: center;
+         text-decoration: none;
+         display: inline-block;
+         font-size: 16px;
+         margin: 4px 2px;
+         -webkit-transition-duration: 0.2s; /* Safari */
+         transition-duration: 0.2s;
+         cursor: pointer;
+    }
+
+    .button.off {
+         background-color: #2E8EA7;
+         border: none;
+         color: white;
+         padding: 16px 16px;
+    }
+
+    .button:hover {
+         background-color: #F29B86;
+         font-size: 17px;
+         border: none;
+         color: white;
+    }
+
+    .button.off:hover {
+         background-color: #5BB9D3;
+         font-size: 17px;
+         border: none;
+         color: white;
+    }
+
+    </style>
+
+    <script>
+
+      var audio_clips = [
+        "music_1",
+        "music_2",
+        "music_3",
+        "music_4",
+        "music_5"
+      ];
+
+      var durations = [
+        19.136, 18.115
+      ];
+
+      var start_time = Date.now();
+
+      function end_func() {
+        document.getElementById("rand_p").innerHTML=(Date.now()-start_time)/1000;
+      };
+
+      function play_audio(audio_id, bttn_id) {
+        var bttn = document.getElementById(bttn_id);
+        bttn.classList.toggle("off");
+        var audi = document.getElementById(audio_id);
+        if (!audi.paused) {
+          bttn.innerHTML = "ADD";
+          audi.pause();
+        }
+        else {
+          bttn.innerHTML = "STOP";
+          var time = 0;
+          var length = audi.duration;
+          audi.currentTime = 0;
+          var arrayLength = audio_clips.length;
+          var none_playing = true;
+          for (var i = 0; i < arrayLength; i++) {
+            var other_clip = document.getElementById(audio_clips[i]);
+            if (!other_clip.paused) {
+              //time = other_clip.currentTime;
+              none_playing = false;
+              time = (Date.now() - start_time)/1000;
+              document.getElementById("rand_p").innerHTML=time;
+              break;
+            }
+          }
+          audi.currentTime=time%length;
+          audi.play();
+          if (none_playing) {
+            start_time = Date.now()
+          }
+        }
+      }
+
+    </script>
+  </head>
+  <body>
+
+    <div class="header">
+      <h1>3 minute make-a-song</h1>
+    </div>
+
+    <div class="topnav">
+      <a href="#">about</a>
+      <a href="#">songs</a>
+      <a href="#">make your own</a>
+    </div>
+
+    <div class="row">
+      <div class="column side">
+        <h2>instructions</h2>
+        <p>Click the buttons to the right to stop and start playing different sounds. Experiment and create your own music!</p>
+      </div>
+      <div class="column middle">
+        <p id="rand_p">This is another random paragraph. Ladididididididda. brakjdlfkjsldkfjljfsljdfsljdjfsldfjskdjfsdlfj.</p>
+        <button id="bttn1" onclick="play_audio('music_1', 'bttn1')" class="button">ADD</button>
+        <button id="bttn2" onclick="play_audio('music_2', 'bttn2')" class="button">ADD</button>
+        <button id="bttn3" onclick="play_audio('music_3', 'bttn3')" class="button">ADD</button>
+        <button id="bttn4" onclick="play_audio('music_4', 'bttn4')" class="button">ADD</button>
+        <button id="bttn5" onclick="play_audio('music_5', 'bttn5')" class="button">ADD</button>
+        <p>The Awkward Song:</p>
+        <audio controls><source src="awk_song.mp3" type="audio/mpeg"></audio>
+        <audio id="music_1" controls onended="end_func()"><source src="bass1.mp3" type="audio/mpeg"></audio>
+        <audio id="music_2" controls onended="end_func()"><source src="high_drums1.mp3" type="audio/mpeg"></audio>
+        <audio id="music_3" controls><source src="awk_song.mp3" type="audio/mpeg"></audio>
+        <audio id="music_4" controls><source src="awk_song.mp3" type="audio/mpeg"></audio>
+        <audio id="music_5" controls><source src="awk_song.mp3" type="audio/mpeg"></audio>
+      </div>
+    </div>
+
+  </body>
+</html>
