@@ -132,10 +132,6 @@
         "music_9"
       ];
 
-      var durations = [
-        19.136, 18.115
-      ];
-
       var start_time = Date.now();
 
       function end_func() {
@@ -153,7 +149,6 @@
         else {
           bttn.innerHTML = "STOP";
           var time = 0;
-          var length = audi.duration;
           audi.currentTime = 0;
           var arrayLength = audio_clips.length;
           var none_playing = true;
@@ -167,7 +162,7 @@
               break;
             }
           }
-          audi.currentTime=time%length;
+          audi.currentTime=time;
           audi.play();
           if (none_playing) {
             start_time = Date.now()
