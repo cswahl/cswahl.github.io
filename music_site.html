@@ -171,7 +171,9 @@
         } else if(keystr == "u") {   // u unmutes the whole current song
             for(var j = 0; j < curr_song.length; j++) {
               document.getElementById(curr_song[j]).currentTime = 1;
-              document.getElementById(curr_song[j]).play();
+              if(document.getElementById(curr_song[j]).paused){
+                document.getElementById(curr_song[j]).play();
+              }
               document.getElementById(curr_song[j]).muted=false;
             }
         } else if(keystr == "y") {   // y will switch the current song
@@ -179,13 +181,17 @@
             for(var j = 0; j < curr_song.length; j++) {
               var audi = document.getElementById(curr_song[j]);
               audi.muted=true;
-              audi.pause();
+              if(!audi.paused){
+                audi.pause();
+              }
             };
             curr_song = songs[song_ind];
             for(var i = 0; i < curr_song.length; i++) {
               var audi = document.getElementById(curr_song[i]);
               audi.currentTime = 1;
-              audi.play();
+              if(audi.paused){
+                audi.play();
+              }
               audi.muted=false;
             }
         } else if(keystr == "a") {  // a will toggle the first track in the current song on and off
@@ -194,7 +200,7 @@
             } else {
               document.getElementById(curr_song[0]).muted = true;
             }
-        } else if(keystr == "k") { // s will toggle the second track in the current song on and off
+        } else if(keystr == "s") { // s will toggle the second track in the current song on and off
             if(document.getElementById(curr_song[1]).muted) {
               document.getElementById(curr_song[1]).muted = false;
             } else {
@@ -208,11 +214,11 @@
             }
         } else if(keystr == "f") { // f will toggle the fourth track in the current song on and off
             if(curr_song.length > 3) {
-            if(document.getElementById(curr_song[3]).muted) {
-              document.getElementById(curr_song[3]).muted = false;
-            } else {
-              document.getElementById(curr_song[3]).muted = true;
-            }
+              if(document.getElementById(curr_song[3]).muted) {
+                document.getElementById(curr_song[3]).muted = false;
+              } else {
+                document.getElementById(curr_song[3]).muted = true;
+              }
             }
         } else if(keystr == "j") { // j will increase the volume of the current song
             for(var i = 0; i < curr_song.length; i++) {
@@ -232,7 +238,7 @@
         bttn.classList.toggle("off");
         if(bttn.innerHTML == "SHOW GUIDE") {
           bttn.innerHTML = "HIDE GUIDE";
-          document.getElementById("guide").innerHTML = "u = reset and unmute current song<br>y = switch songs<br>m = mute current song<br>";
+          document.getElementById("guide").innerHTML = "u = reset and unmute current song<br>y = switch songs<br>m = mute current song<br>a = toggle mute on first track of current song<br>s = same as 'a' but for the second track<br>d = same as 'a' but for the third track<br>f = same as 'a' but for the fourth track<br>j = increase current song's volume<br>k = decrease current song's volume";
         }
         else {
           bttn.innerHTML = "SHOW GUIDE";
