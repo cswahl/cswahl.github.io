@@ -225,53 +225,16 @@
         }
       };
 
-      var audio_clips = [
-        "music_1",
-        "music_2",
-        "music_3",
-        "music_4",
-        "music_5",
-        "music_6",
-        "music_7",
-        "music_8",
-        "music_9"
-      ];
-
-      var start_time = Date.now();
-
-      function end_func() {
-        document.getElementById("rand_p").innerHTML=(Date.now()-start_time)/1000;
-      };
-
-      function play_audio(audio_id, bttn_id) {
+      function toggle_guide(bttn_id) {
         var bttn = document.getElementById(bttn_id);
         bttn.classList.toggle("off");
-        var audi = document.getElementById(audio_id);
-        if (!audi.paused) {
-          bttn.innerHTML = "ADD";
-          audi.pause();
+        if(bttn.innerHTML == "SHOW GUIDE") {
+          bttn.innerHTML = "HIDE GUIDE";
+          document.getElementById("guide").innerHTML = "u = reset and unmute current song<br>y = switch songs<br>m = mute current song<br>";
         }
         else {
-          bttn.innerHTML = "STOP";
-          var time = 0;
-          audi.currentTime = 0;
-          var arrayLength = audio_clips.length;
-          var none_playing = true;
-          for (var i = 0; i < arrayLength; i++) {
-            var other_clip = document.getElementById(audio_clips[i]);
-            if (!other_clip.paused) {
-              //time = other_clip.currentTime;
-              none_playing = false;
-              time = (Date.now() - start_time)/1000;
-              document.getElementById("rand_p").innerHTML=time;
-              break;
-            }
-          }
-          audi.currentTime=time;
-          audi.play();
-          if (none_playing) {
-            start_time = Date.now()
-          }
+          bttn.innerHTML = "SHOW GUIDE";
+          document.getElementById("guide").innerHTML = "";
         }
       }
 
@@ -292,28 +255,19 @@
     <div class="row">
       <div class="column side">
         <h2>instructions</h2>
-        <p>Click the buttons to the right to stop and start playing different sounds. Experiment and create your own music!</p>
+        <p>Please try typing in the text field to the right. Different keys will change what you hear. Try and work out what different letters do if you're interested! Or, if you'd rather just know, click the button below to see the complete guide.</p>
+        <button id="bttn1" onclick="toggle_guide('bttn1')" class="button">SHOW GUIDE</button>
+        <p id="guide"></p>
       </div>
       <div class="column middle">
         <p id="rand_p">This is another random paragraph. Ladididididididda. brakjdlfkjsldkfjljfsljdfsljdjfsldfjskdjfsdlfj.</p>
         <textarea id="textfield" rows="20" cols="70" onkeypress="master_func(event)"></textarea>
-        <button id="bttn1" onclick="play_audio('music_1', 'bttn1')" class="button">ADD</button>
-        <button id="bttn2" onclick="play_audio('music_2', 'bttn2')" class="button">ADD</button>
-        <button id="bttn3" onclick="play_audio('music_3', 'bttn3')" class="button">ADD</button>
-        <button id="bttn4" onclick="play_audio('music_4', 'bttn4')" class="button">ADD</button>
-        <button id="bttn5" onclick="play_audio('music_5', 'bttn5')" class="button">ADD</button>
-        <button id="bttn6" onclick="play_audio('music_6', 'bttn6')" class="button">ADD</button>
-        <button id="bttn7" onclick="play_audio('music_7', 'bttn7')" class="button">ADD</button>
-        <button id="bttn8" onclick="play_audio('music_8', 'bttn8')" class="button">ADD</button>
-        <button id="bttn9" onclick="play_audio('music_9', 'bttn9')" class="button">ADD</button>
-        <p>The Awkward Song:</p>
-        <audio id="music14" controls><source src="awk_song.mp3" type="audio/mpeg"></audio>
-        <audio id="music11" controls onended="end_func()"><source src="music_files/low_drums1.mp3" type="audio/mpeg"></audio>
-        <audio id="music12" controls onended="end_func()"><source src="music_files/high_drum1.mp3" type="audio/mpeg"></audio>
-        <audio id="music13" controls onended="end_func()"><source src="music_files/back_melody1.mp3" type="audio/mpeg"></audio>
-        <audio id="music14" controls onended="end_func()"><source src="music_files/back_violin1.mp3" type="audio/mpeg"></audio>
-        <audio id="music21" controls onended="end_func()"><source src="music_files/high_drums2.mp3" type="audio/mpeg"></audio>
-        <audio id="music22" controls onended="end_func()"><source src="music_files/bass2.mp3" type="audio/mpeg"></audio>
+        <audio id="music11" controls><source src="music_files/low_drums1.mp3" type="audio/mpeg"></audio>
+        <audio id="music12" controls><source src="music_files/high_drum1.mp3" type="audio/mpeg"></audio>
+        <audio id="music13" controls><source src="music_files/back_melody1.mp3" type="audio/mpeg"></audio>
+        <audio id="music14" controls><source src="music_files/back_violin1.mp3" type="audio/mpeg"></audio>
+        <audio id="music21" controls><source src="music_files/high_drums2.mp3" type="audio/mpeg"></audio>
+        <audio id="music22" controls><source src="music_files/bass2.mp3" type="audio/mpeg"></audio>
         <audio id="music23" controls><source src="music_files/arpeg2.mp3" type="audio/mpeg"></audio>
         <audio id="music24" controls><source src="music_files/piano2.mp3" type="audio/mpeg"></audio>
         <audio id="music31" controls><source src="music_files/high_drums3.mp3" type="audio/mpeg"></audio>
