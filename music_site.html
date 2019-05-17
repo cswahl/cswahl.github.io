@@ -62,7 +62,7 @@
 
       /* Left and right column */
       .column.side {
-          width: 25%;
+          width: 30%;
       }
 
       /* Middle column */
@@ -177,7 +177,9 @@
         } else if(keystr == "y") {   // y will switch the current song
             song_ind = (song_ind + 1) % 3;
             for(var j = 0; j < curr_song.length; j++) {
-              document.getElementById(curr_song[j]).muted=true;
+              var audi = document.getElementById(curr_song[j]);
+              audi.muted=true;
+              audi.pause();
             };
             curr_song = songs[song_ind];
             for(var i = 0; i < curr_song.length; i++) {
@@ -243,24 +245,22 @@
   <body>
 
     <div class="header">
-      <h1>3 minute make-a-song</h1>
+      <h1>Type and Listen</h1>
     </div>
 
     <div class="topnav">
-      <a href="#">about</a>
-      <a href="#">songs</a>
-      <a href="#">make your own</a>
+      <a href="https://cswahl.github.io/own_music.html">songs</a>
+      <a href="https://cswahl.github.io/music_site.html">typing</a>
     </div>
 
     <div class="row">
       <div class="column side">
-        <h2>instructions</h2>
+        <h2>Instructions</h2>
         <p>Please try typing in the text field to the right. Different keys will change what you hear. Try and work out what different letters do if you're interested! Or, if you'd rather just know, click the button below to see the complete guide.</p>
         <button id="bttn1" onclick="toggle_guide('bttn1')" class="button">SHOW GUIDE</button>
         <p id="guide"></p>
       </div>
       <div class="column middle">
-        <p id="rand_p">This is another random paragraph. Ladididididididda. brakjdlfkjsldkfjljfsljdfsljdjfsldfjskdjfsdlfj.</p>
         <textarea id="textfield" rows="20" cols="70" onkeypress="master_func(event)"></textarea>
         <audio id="music11" controls><source src="music_files/low_drums1.mp3" type="audio/mpeg"></audio>
         <audio id="music12" controls><source src="music_files/high_drum1.mp3" type="audio/mpeg"></audio>
