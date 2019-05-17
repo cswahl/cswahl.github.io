@@ -15,7 +15,7 @@
       body {
           margin: 0;
       }
-      
+
       .header {
           background-color: #E2F2F2;
           padding: 8px;
@@ -43,7 +43,7 @@
           padding: 14px 16px;
           text-decoration: none;
       }
-        
+
       /* Change color on hover */
       .topnav a:hover {
           background-color: #9FC8CA;
@@ -149,20 +149,21 @@
       var curr_song = songs[0];
       var song_ind = 0;
 
+
       function master_func(e) {
 
         // CITE: https://stackoverflow.com/questions/1846599/how-to-find-out-what-character-key-is-pressed
         // DESCRIP: how to get key that was pressed.
         var keynum;
 
-        if(window.event) { // IE                    
+        if(window.event) { // IE
           keynum = e.keyCode;
-        } else if(e.which){ // Netscape/Firefox/Opera                   
+        } else if(e.which){ // Netscape/Firefox/Opera
           keynum = e.which;
         }
 
         var keystr = String.fromCharCode(keynum);
-        
+
         // m mutes the current song
         if(keystr == "m") {
             for(var j = 0; j < curr_song.length; j++) {
@@ -231,6 +232,47 @@
               audi.volume = audi.volume - 0.1;
             }
         }
+        else if(keystr == "e") {  // e will play a horrible sounding note
+
+          // CITE: https://css-tricks.com/introduction-web-audio-api/
+          // DESCRIP: how to create an oscillator
+          var context = new (window.AudioContext || window.webkitAudioContext)();
+
+          var oscillator = context.createOscillator();
+
+          oscillator.type = 'sine';
+          oscillator.frequency.value = 261.63;
+          oscillator.connect(context.destination);
+
+          var gain = context.createGain();
+          oscillator.connect(gain);
+          gain.connect(context.destination);
+
+          var now = context.currentTime;
+          gain.gain.setValueAtTime(0.4, now);
+          oscillator.start(now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + .3);
+          oscillator.stop(now + .3);
+        }
+        else if(keystr == "q") {  // q will play a different horrible note
+          var context = new (window.AudioContext || window.webkitAudioContext)();
+
+          var oscillator = context.createOscillator();
+
+          oscillator.type = 'sine';
+          oscillator.frequency.value = 293.66;
+          oscillator.connect(context.destination);
+
+          var gain = context.createGain();
+          oscillator.connect(gain);
+          gain.connect(context.destination);
+
+          var now = context.currentTime;
+          gain.gain.setValueAtTime(0.4, now);
+          oscillator.start(now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + .3);
+          oscillator.stop(now + .3);
+        }
       };
 
       function toggle_guide(bttn_id) {
@@ -238,7 +280,7 @@
         bttn.classList.toggle("off");
         if(bttn.innerHTML == "SHOW GUIDE") {
           bttn.innerHTML = "HIDE GUIDE";
-          document.getElementById("guide").innerHTML = "u = reset and unmute current song<br>y = switch songs<br>m = mute current song<br>a = toggle mute on first track of current song<br>s = same as 'a' but for the second track<br>d = same as 'a' but for the third track<br>f = same as 'a' but for the fourth track<br>j = increase current song's volume<br>k = decrease current song's volume";
+          document.getElementById("guide").innerHTML = "u = reset and unmute current song<br>y = switch songs<br>m = mute current song<br>a = toggle mute on first track of current song<br>s = same as 'a' but for the second track<br>d = same as 'a' but for the third track<br>f = same as 'a' but for the fourth track<br>j = increase current song's volume<br>k = decrease current song's volume<br>e = play an unfortunate sound<br>q = play a different, but equally unfortunate sound";
         }
         else {
           bttn.innerHTML = "SHOW GUIDE";
@@ -268,17 +310,17 @@
       </div>
       <div class="column middle">
         <textarea id="textfield" rows="20" cols="70" onkeypress="master_func(event)"></textarea>
-        <audio id="music11" controls><source src="music_files/low_drums1.mp3" type="audio/mpeg"></audio>
-        <audio id="music12" controls><source src="music_files/high_drum1.mp3" type="audio/mpeg"></audio>
-        <audio id="music13" controls><source src="music_files/back_melody1.mp3" type="audio/mpeg"></audio>
-        <audio id="music14" controls><source src="music_files/back_violin1.mp3" type="audio/mpeg"></audio>
-        <audio id="music21" controls><source src="music_files/high_drums2.mp3" type="audio/mpeg"></audio>
-        <audio id="music22" controls><source src="music_files/bass2.mp3" type="audio/mpeg"></audio>
-        <audio id="music23" controls><source src="music_files/arpeg2.mp3" type="audio/mpeg"></audio>
-        <audio id="music24" controls><source src="music_files/piano2.mp3" type="audio/mpeg"></audio>
-        <audio id="music31" controls><source src="music_files/high_drums3.mp3" type="audio/mpeg"></audio>
-        <audio id="music32" controls><source src="music_files/bass3.mp3" type="audio/mpeg"></audio>
-        <audio id="music33" controls><source src="music_files/pluck_inst3.mp3" type="audio/mpeg"></audio>
+        <audio id="music11"><source src="music_files/low_drums1.mp3" type="audio/mpeg"></audio>
+        <audio id="music12"><source src="music_files/high_drum1.mp3" type="audio/mpeg"></audio>
+        <audio id="music13"><source src="music_files/back_melody1.mp3" type="audio/mpeg"></audio>
+        <audio id="music14"><source src="music_files/back_violin1.mp3" type="audio/mpeg"></audio>
+        <audio id="music21"><source src="music_files/high_drums2.mp3" type="audio/mpeg"></audio>
+        <audio id="music22"><source src="music_files/bass2.mp3" type="audio/mpeg"></audio>
+        <audio id="music23"><source src="music_files/arpeg2.mp3" type="audio/mpeg"></audio>
+        <audio id="music24"><source src="music_files/piano2.mp3" type="audio/mpeg"></audio>
+        <audio id="music31"><source src="music_files/high_drums3.mp3" type="audio/mpeg"></audio>
+        <audio id="music32"><source src="music_files/bass3.mp3" type="audio/mpeg"></audio>
+        <audio id="music33"><source src="music_files/pluck_inst3.mp3" type="audio/mpeg"></audio>
       </div>
     </div>
 
